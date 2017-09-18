@@ -3,7 +3,7 @@
         "encoder": "opusenc.exe",
         "input_dir": "input",
         "output_dir": "output",
-        "watch_ext": [".wav"],
+        "watch_ext": [".wav", ".aiff", ".flac", ".ogg"],
         "output_ext": ".opus"
     },
     "types": {
@@ -26,6 +26,10 @@
         "500": {
             "--bitrate": "500",
             "--vbr": ""
+        },
+        "": {
+            "--bitrate": "192",
+            "--vbr": ""            
         }
     }
 }
