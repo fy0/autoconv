@@ -7,8 +7,25 @@
         "output_ext": ".opus"
     },
     "types": {
-        "music": {
-            "--title": "'track title'"
+        "48": {
+            "--bitrate": "48",
+            "--vbr": ""
+        },
+        "96": {
+            "--bitrate": "96",
+            "--vbr": ""
+        },
+        "192": {
+            "--bitrate": "192",
+            "--vbr": ""
+        },
+        "384": {
+            "--bitrate": "384",
+            "--vbr": ""
+        },
+        "500": {
+            "--bitrate": "500",
+            "--vbr": ""
         }
     }
 }

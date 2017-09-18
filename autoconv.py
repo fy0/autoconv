@@ -19,6 +19,8 @@
 import os
 import json
 import time
+import subprocess
+from shlex import quote
 from pathlib import Path  # py3.4+
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -28,7 +30,7 @@ config = {}
 
 def convert(type_name, filepath):    
     if len(filepath.parts) == 1:
-        return
+        type_name = ''
     if filepath.suffix not in config['global']['watch_ext']:
         return
 
@@ -42,17 +44,17 @@ def convert(type_name, filepath):
         out_path = Path(config['global']['output_dir']).joinpath(filepath)
         out_ext = config['global']['output_ext']
 
+        encoder = subprocess.list2cmdline([config['global']['encoder']])
+
         cmd = [
-            config['global']['encoder'],
-            ' '.join(params),
             str(Path(config['global']['input_dir']).joinpath(filepath)),
             str(out_path)[:-len(out_path.suffix)] + out_ext  # .absolute()
         ]
 
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
-        cmd = ' '.join(cmd)
-        print('Running: %s' % cmd)
-        os.system(cmd)
+        cmd_txt = encoder + ' ' + ' '.join(params) + subprocess.list2cmdline(cmd)
+        print('Running: %s' % cmd_txt)
+        os.system(cmd_txt)
     return True
 
 
@@ -63,14 +65,15 @@ class FileEventHandler(FileSystemEventHandler):
         else:
             path = Path(event.dest_path).relative_to(config['global']['input_dir'])
             if convert(path.parts[0], path):
-                print("file moved from {0} to {1}".format(event.src_path,event.dest_path))
+                #print("file moved from {0} to {1}".format(event.src_path,event.dest_path))
+                print('[Encoded] %s' % event.src_path)
 
     def on_modified(self, event):
         if not event.is_directory:
             path = Path(event.src_path).relative_to(config['global']['input_dir'])
             if convert(path.parts[0], path):
-                print("file modified: %s" % event.src_path)
-
+                #print("file modified: %s" % event.src_path)
+                print('[Encoded] %s' % event.src_path)
 
 
 def main():
