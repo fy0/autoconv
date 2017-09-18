@@ -1,0 +1,14 @@
+{
+    "global": {
+        "encoder": "opusenc.exe",
+        "input_dir": "input",
+        "output_dir": "output",
+        "watch_ext": [".wav"],
+        "output_ext": ".opus"
+    },
+    "types": {
+        "music": {
+            "--title": "'track title'"
+        }
+    }
+}
