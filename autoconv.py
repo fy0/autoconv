@@ -32,7 +32,6 @@ def convert(type_name, filepath):
     if filepath.suffix not in config['global']['watch_ext']:
         return
 
-
     if type_name in config['types']:
         typeinfo = config['types'][type_name]
         
